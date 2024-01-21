@@ -18,6 +18,6 @@ export const login_details = (userdata) => {
                 } else {
                     dispatch({ type: LOGIN_ERROR, data: "login error" });                  
                 }
-            })
+            }).catch(err => alert("something went wrong"))
     }
 }

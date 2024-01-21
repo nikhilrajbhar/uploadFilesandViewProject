@@ -1,13 +1,24 @@
 import React from 'react';
-import { useState } from 'react';
-import { useDispatch } from "react-redux";
+import { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from "react-redux";
 import { login_details } from '../../../redux/actions/userAction';
 
 export default function Login() {
 
     const [name, setname] = useState("");
     const [password, setpassword] = useState("");
+    const [check, setcheck] = useState(false);
     const dispatch = useDispatch();
+
+    const logindata = useSelector((state) => state.user);
+
+    useEffect(() => {
+        const errorLogin = logindata?.errorLogin;
+        console.log(errorLogin);
+        if (errorLogin) {
+            alert("login error")
+        }
+    },[check])
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -18,6 +29,10 @@ export default function Login() {
             password: password.trim(),
         }
         dispatch(login_details(user));
+        setTimeout(() => {
+            setcheck(state => !state);
+            
+        }, 100);
     }
 
     return (
